@@ -1,6 +1,6 @@
 #[macro_export]
 macro_rules! apply {
-    ($this:ident, { $($prop:ident = $val:expr);* $(;)? }) => {
+    ($this:ident, { $($prop:ident = $val:expr);+ ; }) => {
         {
             $(
                $this.$prop = $val;
