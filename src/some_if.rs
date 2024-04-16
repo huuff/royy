@@ -3,12 +3,12 @@
 /// ```
 /// #[macro_use] extern crate royy;
 /// # fn main() {
-///     assert_eq!(some_if!("even", 8 % 2 == 0), Some("even"))
+///     assert_eq!(some_if!(8 % 2 == 0 => "even"), Some("even"))
 /// # }
 /// ```
 #[macro_export]
 macro_rules! some_if {
-    ($res:expr, $cond:expr) => {
+    ($cond:expr => $res:expr) => {
         if $cond {
             Some($res)
         } else {
