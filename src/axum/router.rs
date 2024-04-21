@@ -1,7 +1,7 @@
 #[macro_export]
 macro_rules! __route {
     ($router:ident,) => {};
-    (@method $method:expr) => { axum::routing::$it };
+    (@method $method:expr) => { axum::routing::$method };
     ($router:ident, $method:ident $path:expr => $handler:expr; $($tail:tt)*) => {
         $router = $router.route($path, $crate::__route!(@method casey::lower!($method))($handler));
         $crate::__route!($router, $($tail)*)
