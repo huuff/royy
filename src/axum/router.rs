@@ -1,7 +1,7 @@
 macro_rules! route {
     ($router:ident,) => {};
     ($router:ident, $method:ident $path:expr => $handler:expr; $($tail:tt)*) => {
-        $router = $router.route($path, casey::lower!($method)($handler));
+        $router = $router.route($path, axum::routing::casey::lower!($method)($handler));
         route!($router, $($tail)*)
     };
 }
