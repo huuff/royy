@@ -1,8 +1,9 @@
 #[macro_export]
 macro_rules! __route {
     ($router:ident,) => {};
+    (@method $method:ident) => { axum::routing::$it };
     ($router:ident, $method:ident $path:expr => $handler:expr; $($tail:tt)*) => {
-        $router = $router.route($path, axum::routing::casey::lower!($method)($handler));
+        $router = $router.route($path, $crate::_route!(casey::lower!($method))($handler));
         $crate::__route!($router, $($tail)*)
     };
 }
@@ -10,9 +11,6 @@ macro_rules! __route {
 // TODO: Document this (and maybe test it?)
 #[macro_export]
 macro_rules! router {
-    ($router:ident, { $($tail:tt)* } ) => {
-        $crate::__route!(router, $($tail)*);
-    };
     ($($tail:tt)*) => {
         {
             let mut router = axum::Router::new();
