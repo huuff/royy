@@ -1,9 +1,16 @@
 #[macro_export]
 macro_rules! __route {
     ($router:ident,) => {};
-    (@method $method:expr) => { axum::routing::$method };
-    ($router:ident, $method:ident $path:expr => $handler:expr; $($tail:tt)*) => {
-        $router = $router.route($path, $crate::__route!(@method casey::lower!($method))($handler));
+    ($router:ident, GET $path:expr => $handler:expr; $($tail:tt)*) => {
+        $router = $router.route($path, axum::routing::get($handler));
+        $crate::__route!($router, $($tail)*)
+    };
+    ($router:ident, POST $path:expr => $handler:expr; $($tail:tt)*) => {
+        $router = $router.route($path, axum::routing::post($handler));
+        $crate::__route!($router, $($tail)*)
+    };
+    ($router:ident, DELETE $path:expr => $handler:expr; $($tail:tt)*) => {
+        $router = $router.route($path, axum::routing::delete($handler));
         $crate::__route!($router, $($tail)*)
     };
 }
