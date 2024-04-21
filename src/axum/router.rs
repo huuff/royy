@@ -13,8 +13,10 @@ macro_rules! router {
         route!(router, $($tail)*);
     };
     ($($tail:tt)*) => {
-      let mut router = axum::Router::new();
-      route!(router, $($tail)*);
-      router
+        {
+            let mut router = axum::Router::new();
+            route!(router, $($tail)*);
+            router
+        }
     };
 }
