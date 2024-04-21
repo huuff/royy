@@ -15,4 +15,5 @@ macro_rules! some_if {
             None
         }
     };
+    ($var:ident,  ) => {};
 }
